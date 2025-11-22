@@ -1,3 +1,607 @@
-git init
-git add .
-git commit -m "Initial commit"
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ponnaboina Charan Sai - VLSI Portfolio</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Monaco', 'Consolas', 'monospace'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="min-h-screen bg-slate-950 text-slate-300 font-sans selection:bg-cyan-500/30 overflow-x-hidden">
+
+    <div class="fixed inset-0 z-0 opacity-10 pointer-events-none overflow-hidden">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="currentColor" stroke-width="0.5" class="text-cyan-500"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#grid)" />
+        </svg>
+    </div>
+
+    <nav id="navbar" class="fixed top-0 w-full z-50 transition-all duration-300 py-6 border-b border-transparent">
+        <div class="container mx-auto px-6 flex justify-between items-center">
+            <div class="text-xl font-bold font-mono text-white flex items-center gap-2">
+                <i data-lucide="cpu" class="text-cyan-500"></i>
+                <span class="tracking-tighter">PCS<span class="text-cyan-500">.VLSI</span></span>
+            </div>
+            <div class="hidden md:flex gap-2">
+                <a href="#home" class="nav-link px-4 py-2 text-sm font-mono text-slate-400 hover:text-cyan-300 transition-colors">Home</a>
+                <a href="#skills" class="nav-link px-4 py-2 text-sm font-mono text-slate-400 hover:text-cyan-300 transition-colors">Skills</a>
+                <a href="#timeline" class="nav-link px-4 py-2 text-sm font-mono text-slate-400 hover:text-cyan-300 transition-colors">Timeline</a>
+                <a href="#projects" class="nav-link px-4 py-2 text-sm font-mono text-slate-400 hover:text-cyan-300 transition-colors">Projects</a>
+                <a href="#certifications" class="nav-link px-4 py-2 text-sm font-mono text-slate-400 hover:text-cyan-300 transition-colors">Certs</a>
+                <a href="#contact" class="nav-link px-4 py-2 text-sm font-mono bg-cyan-600/20 border border-cyan-500/50 text-cyan-400 hover:bg-cyan-600 hover:text-white rounded transition-colors">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button class="text-white"><i data-lucide="menu"></i></button>
+            </div>
+        </div>
+    </nav>
+
+    <section id="home" class="relative pt-32 pb-20 md:pt-48 md:pb-32 px-6">
+        <div class="container mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
+            
+            <div class="order-2 md:order-1">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-cyan-900/30 border border-cyan-500/30 text-cyan-400 text-xs font-mono mb-6">
+                    <span class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></span>
+                    VLSI Specialist | Chip Design
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold text-white mb-6 leading-tight">
+                    Ponnaboina <br />
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">
+                        Charan Sai
+                    </span>
+                </h1>
+                <p class="text-lg text-slate-400 mb-8 max-w-xl leading-relaxed">
+                    Passionate B.Tech Student in ECE at SR University. Specializing in VLSI, 
+                    intrigued by the intricacies of chip design, fabrication processes, and 
+                    digital circuit optimization.
+                </p>
+                <div class="flex flex-wrap gap-4 mb-8">
+                    <a href="#projects" class="px-8 py-3 bg-cyan-500 hover:bg-cyan-400 text-slate-900 font-bold rounded transition-colors flex items-center gap-2">
+                        View Projects <i data-lucide="activity" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#" class="px-8 py-3 border border-slate-700 hover:border-cyan-500/50 hover:bg-cyan-950/30 text-white font-medium rounded transition-all flex items-center gap-2">
+                        Download CV <i data-lucide="download" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="relative order-1 md:order-2 flex justify-center items-center">
+                <div class="relative w-[300px] h-[300px] md:w-[400px] md:h-[400px] border border-slate-800 bg-slate-900/50 rounded-lg shadow-[0_0_50px_rgba(6,182,212,0.15)] overflow-hidden group">
+                    
+                    <canvas id="binary-canvas" class="absolute inset-0 w-full h-full z-10"></canvas>
+                    
+                    <div class="absolute top-0 left-0 w-8 h-8 border-t-2 border-l-2 border-cyan-500 z-20"></div>
+                    <div class="absolute top-0 right-0 w-8 h-8 border-t-2 border-r-2 border-cyan-500 z-20"></div>
+                    <div class="absolute bottom-0 left-0 w-8 h-8 border-b-2 border-l-2 border-cyan-500 z-20"></div>
+                    <div class="absolute bottom-0 right-0 w-8 h-8 border-b-2 border-r-2 border-cyan-500 z-20"></div>
+                    
+                    <div id="status-label" class="absolute bottom-4 right-4 z-20 text-[10px] font-mono text-cyan-500 bg-slate-950 px-2 py-1 border border-cyan-900 rounded transition-colors duration-500">
+                        INITIALIZING...
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce text-slate-600">
+            <i data-lucide="chevron-down"></i>
+        </div>
+    </section>
+
+    <section id="skills" class="py-20 px-6 relative z-10 bg-slate-950/50">
+        <div class="container mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 font-mono flex items-center gap-3">Tech Stack</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-600 mb-4"></div>
+            </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="bg-slate-900/50 border border-slate-700 p-6 rounded-lg hover:border-cyan-500/50 transition-all group">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400"><i data-lucide="zap"></i> <h3 class="text-xl font-bold text-slate-100 font-mono">EDA & Sim</h3></div>
+                    <div class="flex flex-wrap gap-2"><span class="skill-tag">MATLAB</span><span class="skill-tag">LTSPICE</span><span class="skill-tag">HSPICE</span><span class="skill-tag">Vivado</span></div>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-700 p-6 rounded-lg hover:border-cyan-500/50 transition-all group">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400"><i data-lucide="code"></i> <h3 class="text-xl font-bold text-slate-100 font-mono">Programming</h3></div>
+                    <div class="flex flex-wrap gap-2"><span class="skill-tag">Verilog</span><span class="skill-tag">Python</span><span class="skill-tag">C / C++</span><span class="skill-tag">SystemVerilog</span></div>
+                </div>
+                <div class="bg-slate-900/50 border border-slate-700 p-6 rounded-lg hover:border-cyan-500/50 transition-all group">
+                    <div class="flex items-center gap-3 mb-4 text-cyan-400"><i data-lucide="microchip"></i> <h3 class="text-xl font-bold text-slate-100 font-mono">Domains</h3></div>
+                    <div class="flex flex-wrap gap-2"><span class="skill-tag">Digital Design</span><span class="skill-tag">IoT</span><span class="skill-tag">Robotics</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="timeline" class="py-20 px-6 bg-slate-900/30 relative z-10">
+        <div class="container mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 font-mono">Experience & Education</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-600 mb-4"></div>
+            </div>
+            
+            <div class="max-w-4xl mx-auto mt-12">
+                <div class="relative grid md:grid-cols-2 mb-16 group w-full">
+                    <div class="md:text-right md:pr-12 relative order-1 md:order-none">
+                        <div class="flex md:justify-end items-center gap-3 mb-2">
+                            <h4 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">IIT Hyderabad</h4>
+                            <img src="https://upload.wikimedia.org/wikipedia/en/1/19/IIT_Hyderabad_Insignia.svg" alt="IITH" class="w-10 h-10 bg-white rounded-full p-1 object-contain">
+                        </div>
+                        <p class="text-cyan-500 font-mono text-sm mb-1">Research Intern</p>
+                        <p class="text-slate-500 text-xs font-mono">Magnetic Characterizations</p>
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 -ml-4 top-0 bottom-0 w-8 flex-col items-center justify-start z-10 pointer-events-none h-full">
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-slate-800 group-hover:bg-cyan-900/50 transition-colors h-full"></div>
+                        <div class="relative mt-2 w-8 h-8 bg-slate-900 border border-slate-600 rounded-sm group-hover:border-cyan-400 transition-all flex items-center justify-center z-20">
+                            <div class="w-3 h-3 bg-slate-800 border border-slate-700 group-hover:bg-cyan-500 transition-colors"></div>
+                        </div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pl-12 relative order-2 md:order-none">
+                        <p class="text-slate-400 text-sm">Project focused on Magnetic Characterizations of Permalloy Devices.</p>
+                    </div>
+                </div>
+
+                <div class="relative grid md:grid-cols-2 mb-16 group w-full">
+                    <div class="md:text-right md:pr-12 relative order-1 md:order-none">
+                        <div class="flex md:justify-end items-center gap-3 mb-2">
+                            <h4 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">SR University</h4>
+                            <img src="https://images.shiksha.com/mediadata/images/1600671684phpvE7z0r.jpeg" alt="SRU" class="w-10 h-10 bg-white rounded-full p-1 object-contain">
+                        </div>
+                        <p class="text-cyan-500 font-mono text-sm mb-1">B.Tech - ECE (VLSI)</p>
+                        <p class="text-slate-500 text-xs font-mono">Current</p>
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 -ml-4 top-0 bottom-0 w-8 flex-col items-center justify-start z-10 pointer-events-none h-full">
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-slate-800 group-hover:bg-cyan-900/50 transition-colors h-full"></div>
+                        <div class="relative mt-2 w-8 h-8 bg-slate-900 border border-slate-600 rounded-sm group-hover:border-cyan-400 transition-all flex items-center justify-center z-20">
+                            <div class="w-3 h-3 bg-slate-800 border border-slate-700 group-hover:bg-cyan-500 transition-colors"></div>
+                        </div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pl-12 relative order-2 md:order-none">
+                        <p class="text-slate-400 text-sm">Specializing in VLSI Design and Digital Circuit Optimization.</p>
+                    </div>
+                </div>
+                
+                <div class="relative grid md:grid-cols-2 mb-16 group w-full">
+                    <div class="md:text-right md:pr-12 relative order-1 md:order-none">
+                        <h4 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">Orugallu Junior College</h4>
+                        <p class="text-cyan-500 font-mono text-sm mb-1">Intermediate (MPC)</p>
+                        <p class="text-slate-500 text-xs font-mono">2023 | Score: 897</p>
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 -ml-4 top-0 bottom-0 w-8 flex-col items-center justify-start z-10 pointer-events-none h-full">
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-slate-800 group-hover:bg-cyan-900/50 transition-colors h-full"></div>
+                        <div class="relative mt-2 w-8 h-8 bg-slate-900 border border-slate-600 rounded-sm group-hover:border-cyan-400 transition-all flex items-center justify-center z-20">
+                            <div class="w-3 h-3 bg-slate-800 border border-slate-700 group-hover:bg-cyan-500 transition-colors"></div>
+                        </div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pl-12 relative order-2 md:order-none">
+                        <p class="text-slate-400 text-sm">Waddepally, Telangana.</p>
+                    </div>
+                </div>
+
+                <div class="relative grid md:grid-cols-2 mb-16 group w-full">
+                    <div class="md:text-right md:pr-12 relative order-1 md:order-none">
+                        <h4 class="text-lg font-bold text-white group-hover:text-cyan-400 transition-colors">Swami Vivekananda School</h4>
+                        <p class="text-cyan-500 font-mono text-sm mb-1">Secondary School (10th)</p>
+                        <p class="text-slate-500 text-xs font-mono">2021 | GPA: 10.0</p>
+                    </div>
+                    <div class="hidden md:flex absolute left-1/2 -ml-4 top-0 bottom-0 w-8 flex-col items-center justify-start z-10 pointer-events-none h-full">
+                        <div class="absolute top-0 bottom-0 w-[2px] bg-slate-800 group-hover:bg-cyan-900/50 transition-colors h-full"></div>
+                        <div class="relative mt-2 w-8 h-8 bg-slate-900 border border-slate-600 rounded-sm group-hover:border-cyan-400 transition-all flex items-center justify-center z-20">
+                            <div class="w-3 h-3 bg-slate-800 border border-slate-700 group-hover:bg-cyan-500 transition-colors"></div>
+                        </div>
+                    </div>
+                    <div class="mt-2 md:mt-0 md:pl-12 relative order-2 md:order-none">
+                        <p class="text-slate-400 text-sm">Achieved perfect GPA in 10th grade.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="py-20 px-6 relative z-10">
+        <div class="container mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 font-mono">Projects</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-600 mb-4"></div>
+            </div>
+            <div class="grid md:grid-cols-2 gap-8">
+                <a href="#" class="block relative bg-slate-900 border border-slate-700 rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-cyan-900/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://plus.unsplash.com/premium_photo-1661414415246-3e502e2fb241?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-mono text-emerald-400 mb-1 block">Research Paper</span>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 mb-2">Multipliers using Full Adders</h3>
+                        <p class="text-slate-400 text-sm mb-4">Research accepted in Inspect 2025.</p>
+                        <div class="flex gap-2"><span class="tech-tag">Digital Design</span><span class="tech-tag">VLSI</span></div>
+                    </div>
+                </a>
+                <a href="#" class="block relative bg-slate-900 border border-slate-700 rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-cyan-900/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1535378437327-664c712c4324?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-mono text-emerald-400 mb-1 block">Robotics</span>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 mb-2">Fire-Fighting Robot</h3>
+                        <p class="text-slate-400 text-sm mb-4">Embedded C rover with fire sensors.</p>
+                        <div class="flex gap-2"><span class="tech-tag">Embedded C</span><span class="tech-tag">Sensors</span></div>
+                    </div>
+                </a>
+                <a href="#" class="block relative bg-slate-900 border border-slate-700 rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-cyan-900/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-mono text-emerald-400 mb-1 block">Sustainable Tech</span>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 mb-2">Renewable Energy Car</h3>
+                        <p class="text-slate-400 text-sm mb-4">Solar and wind powered vehicle design.</p>
+                        <div class="flex gap-2"><span class="tech-tag">Solar/Wind</span><span class="tech-tag">Mechanical</span></div>
+                    </div>
+                </a>
+                <a href="#" class="block relative bg-slate-900 border border-slate-700 rounded-xl overflow-hidden group hover:-translate-y-1 transition-transform duration-300">
+                    <div class="h-48 overflow-hidden relative">
+                        <div class="absolute inset-0 bg-cyan-900/20 group-hover:bg-transparent transition-colors z-10"></div>
+                        <img src="https://images.unsplash.com/photo-1507925921958-8a62f3d1a50d?q=80&w=1000&auto=format&fit=crop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-xs font-mono text-emerald-400 mb-1 block">App Dev</span>
+                        <h3 class="text-xl font-bold text-white group-hover:text-cyan-400 mb-2">Time Management App</h3>
+                        <p class="text-slate-400 text-sm mb-4">Task tracking and notification system.</p>
+                        <div class="flex gap-2"><span class="tech-tag">Java</span><span class="tech-tag">Android</span></div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="certifications" class="py-20 px-6 relative z-10 bg-slate-950/50">
+        <div class="container mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 font-mono">Certifications</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-600 mb-4"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="group relative block bg-slate-900 border border-slate-700 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all">
+                    <div class="h-48 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1635350645080-26f63344e476?q=80&w=1000&auto=format&fit=crop" alt="MATLAB" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    <div class="p-4 relative">
+                        <div class="absolute -top-6 right-4 bg-slate-800 border border-slate-600 p-2 rounded-full text-cyan-400 shadow-lg"><i data-lucide="award" class="w-5 h-5"></i></div>
+                        <h4 class="text-white font-bold text-sm">MATLAB Onramp</h4>
+                        <p class="text-slate-500 text-xs mt-1">MathWorks</p>
+                    </div>
+                </div>
+                <div class="group relative block bg-slate-900 border border-slate-700 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all">
+                    <div class="h-48 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1000&auto=format&fit=crop" alt="VLSI" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    <div class="p-4 relative">
+                        <div class="absolute -top-6 right-4 bg-slate-800 border border-slate-600 p-2 rounded-full text-cyan-400 shadow-lg"><i data-lucide="award" class="w-5 h-5"></i></div>
+                        <h4 class="text-white font-bold text-sm">VLSI Digital Design</h4>
+                        <p class="text-slate-500 text-xs mt-1">Infosys Springboard</p>
+                    </div>
+                </div>
+                <div class="group relative block bg-slate-900 border border-slate-700 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all">
+                    <div class="h-48 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1000&auto=format&fit=crop" alt="IoT" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    <div class="p-4 relative">
+                        <div class="absolute -top-6 right-4 bg-slate-800 border border-slate-600 p-2 rounded-full text-cyan-400 shadow-lg"><i data-lucide="award" class="w-5 h-5"></i></div>
+                        <h4 class="text-white font-bold text-sm">Introduction to IoT</h4>
+                        <p class="text-slate-500 text-xs mt-1">Cisco</p>
+                    </div>
+                </div>
+                <div class="group relative block bg-slate-900 border border-slate-700 rounded-xl overflow-hidden hover:border-cyan-500/50 transition-all">
+                    <div class="h-48 overflow-hidden bg-slate-800">
+                        <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b?q=80&w=1000&auto=format&fit=crop" alt="AI" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+                    </div>
+                    <div class="p-4 relative">
+                        <div class="absolute -top-6 right-4 bg-slate-800 border border-slate-600 p-2 rounded-full text-cyan-400 shadow-lg"><i data-lucide="award" class="w-5 h-5"></i></div>
+                        <h4 class="text-white font-bold text-sm">AI For ALL</h4>
+                        <p class="text-slate-500 text-xs mt-1">IUCEE</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="achievements" class="py-20 px-6 relative z-10">
+        <div class="container mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-2 font-mono">Achievements</h2>
+                <div class="h-1 w-24 bg-gradient-to-r from-cyan-500 to-blue-600 mb-4"></div>
+            </div>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-500/50 transition-colors">
+                    <i data-lucide="award" class="text-yellow-500 mb-4 w-8 h-8"></i>
+                    <h3 class="text-lg font-bold text-white">1st Place - Hackathon</h3>
+                    <p class="text-slate-400 text-sm mt-1">SR University, 2023</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-500/50 transition-colors">
+                    <i data-lucide="star" class="text-cyan-500 mb-4 w-8 h-8"></i>
+                    <h3 class="text-lg font-bold text-white">Eureka! '24 Zonalist</h3>
+                    <p class="text-slate-400 text-sm mt-1">Business Model Comp, IIT Bombay</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-500/50 transition-colors">
+                    <i data-lucide="award" class="text-purple-500 mb-4 w-8 h-8"></i>
+                    <h3 class="text-lg font-bold text-white">Smart India Hackathon</h3>
+                    <p class="text-slate-400 text-sm mt-1">University Level Participant</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-500/50 transition-colors">
+                    <i data-lucide="award" class="text-blue-500 mb-4 w-8 h-8"></i>
+                    <h3 class="text-lg font-bold text-white">MATLAB Minidrone</h3>
+                    <p class="text-slate-400 text-sm mt-1">Competition Participant</p>
+                </div>
+                <div class="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-cyan-500/50 transition-colors">
+                    <i data-lucide="users" class="text-emerald-500 mb-4 w-8 h-8"></i>
+                    <h3 class="text-lg font-bold text-white">Treasurer - Samarambh</h3>
+                    <p class="text-slate-400 text-sm mt-1">Technical Event, SR University</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="py-20 px-6 relative z-10 bg-gradient-to-b from-slate-950 to-slate-900">
+        <div class="container mx-auto max-w-4xl text-center">
+            <h2 class="text-4xl font-bold text-white mb-8">Get In Touch</h2>
+            <div class="flex flex-col md:flex-row justify-center gap-6 mb-12">
+                <a href="mailto:ponnaboinacharansai@gmail.com" class="flex items-center justify-center gap-3 px-8 py-4 bg-slate-800 border border-slate-700 rounded-lg hover:border-cyan-500 hover:text-cyan-400 transition-all">
+                    <i data-lucide="mail"></i> <span>ponnaboinacharansai@gmail.com</span>
+                </a>
+                <a href="tel:+917093155481" class="flex items-center justify-center gap-3 px-8 py-4 bg-slate-800 border border-slate-700 rounded-lg hover:border-cyan-500 hover:text-cyan-400 transition-all">
+                    <i data-lucide="phone"></i> <span>+91 70931 55481</span>
+                </a>
+            </div>
+            <div class="bg-slate-900/50 p-8 rounded-xl border border-slate-800 text-left max-w-2xl mx-auto mb-12">
+                <form id="contact-form" class="space-y-4">
+                    <div>
+                        <label class="block text-slate-400 mb-2 text-sm font-mono">Name</label>
+                        <input type="text" id="form-name" required class="w-full bg-slate-950 border border-slate-700 rounded p-3 text-white focus:border-cyan-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-2 text-sm font-mono">Email</label>
+                        <input type="email" id="form-email" required class="w-full bg-slate-950 border border-slate-700 rounded p-3 text-white focus:border-cyan-500 focus:outline-none">
+                    </div>
+                    <div>
+                        <label class="block text-slate-400 mb-2 text-sm font-mono">Message</label>
+                        <textarea id="form-message" required rows="4" class="w-full bg-slate-950 border border-slate-700 rounded p-3 text-white focus:border-cyan-500 focus:outline-none"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-3 rounded transition-colors flex items-center justify-center gap-2">
+                        Send Message <i data-lucide="send" class="w-4 h-4"></i>
+                    </button>
+                </form>
+            </div>
+            <div class="flex justify-center gap-6">
+                <a href="#" class="p-4 bg-slate-800 border border-slate-700 rounded-full hover:border-cyan-500 hover:text-cyan-400 hover:-translate-y-1 transition-all"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="p-4 bg-slate-800 border border-slate-700 rounded-full hover:border-cyan-500 hover:text-cyan-400 hover:-translate-y-1 transition-all"><i data-lucide="github"></i></a>
+            </div>
+            <div class="pt-12 mt-12 border-t border-slate-800 text-sm text-slate-600 font-mono">
+                <p>© 2025 Ponnaboina Charan Sai | VLSI & Embedded Systems</p>
+            </div>
+        </div>
+    </section>
+
+    <style>
+        .skill-tag { @apply px-3 py-1 text-xs font-mono text-cyan-100 bg-slate-800 border border-slate-700 rounded transition-all; }
+        .skill-tag:hover { @apply border-cyan-500/50 bg-slate-700/80; }
+        .tech-tag { @apply text-xs text-slate-300 bg-slate-800 px-2 py-1 rounded border border-slate-700/50; }
+    </style>
+
+    <script>
+        lucide.createIcons();
+
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('bg-slate-950/90', 'backdrop-blur-md', 'border-slate-800', 'py-3');
+                nav.classList.remove('bg-transparent', 'border-transparent', 'py-6');
+            } else {
+                nav.classList.add('bg-transparent', 'border-transparent', 'py-6');
+                nav.classList.remove('bg-slate-950/90', 'backdrop-blur-md', 'border-slate-800', 'py-3');
+            }
+        });
+
+        // ==========================================
+        //  BINARY PORTRAIT GENERATOR (TIMED & SCALED)
+        // ==========================================
+        
+        const canvas = document.getElementById('binary-canvas');
+        const ctx = canvas.getContext('2d');
+        const statusLabel = document.getElementById('status-label');
+        const img = new Image();
+        
+        // CHANGE TO YOUR PHOTO PATH (e.g., 'images/profile.jpg')
+        const imagePath = 'images/profile.jpg';
+        img.crossOrigin = "Anonymous"; 
+        img.src = imagePath;
+
+        const fontSize = 8;
+        let binaryData = [];
+        let startTime = Date.now();
+
+        // We need to track cycle time explicitly for smooth animation
+        const CYCLE_DURATION = 10000; // 10 seconds total loop
+
+        img.onload = () => {
+            canvas.width = canvas.parentElement.offsetWidth;
+            canvas.height = canvas.parentElement.offsetHeight;
+            
+            const tempCanvas = document.createElement('canvas');
+            const tempCtx = tempCanvas.getContext('2d');
+            tempCanvas.width = canvas.width;
+            tempCanvas.height = canvas.height;
+            
+            // Maintain Aspect Ratio & Center Image
+            const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+            const cx = (canvas.width - img.width * ratio) / 2;
+            const cy = (canvas.height - img.height * ratio) / 2; 
+            tempCtx.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+
+            const imageData = tempCtx.getImageData(0, 0, canvas.width, canvas.height).data;
+            const cols = Math.floor(canvas.width / fontSize);
+            const rows = Math.floor(canvas.height / fontSize);
+
+            for (let y = 0; y < rows; y++) {
+                for (let x = 0; x < cols; x++) {
+                    const pixelIndex = ((y * fontSize) * canvas.width + (x * fontSize)) * 4;
+                    const r = imageData[pixelIndex];
+                    const g = imageData[pixelIndex + 1];
+                    const b = imageData[pixelIndex + 2];
+                    
+                    binaryData.push({
+                        x: x * fontSize,
+                        y: y * fontSize,
+                        color: `rgb(${r},${g},${b})`,
+                        value: Math.random() > 0.5 ? "1" : "0"
+                    });
+                }
+            }
+            animate();
+        };
+
+        function animate() {
+            const currentTime = Date.now();
+            const elapsed = (currentTime - startTime) % CYCLE_DURATION; 
+
+            // Clear Canvas
+            ctx.fillStyle = '#020617'; 
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.font = `bold ${fontSize}px monospace`;
+
+            // ------------------------------------------------
+            // PHASE 1: DIGITIZE (0s - 2s)
+            // Photo fades out, Binary (colored) fades in
+            // ------------------------------------------------
+            if (elapsed < 2000) {
+                statusLabel.innerText = "DECRYPTING_DATA...";
+                statusLabel.className = "absolute bottom-4 right-4 z-20 text-[10px] font-mono text-cyan-500 bg-slate-950 px-2 py-1 border border-cyan-900 rounded";
+                
+                const progress = elapsed / 2000; 
+                
+                // Draw Fading Photo
+                ctx.globalAlpha = 1 - progress;
+                const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const cx = (canvas.width - img.width * ratio) / 2;
+                const cy = (canvas.height - img.height * ratio) / 2; 
+                ctx.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+
+                // Draw Fading Binary (On Top)
+                ctx.globalAlpha = progress;
+                binaryData.forEach(p => {
+                    if(Math.random() > 0.95) p.value = Math.random() > 0.5 ? "1" : "0"; // Twinkle
+                    ctx.fillStyle = p.color; 
+                    ctx.fillText(p.value, p.x, p.y);
+                });
+            } 
+            
+            // ------------------------------------------------
+            // PHASE 2: BINARY PORTRAIT (2s - 5s)
+            // Pure 0s and 1s forming the image
+            // ------------------------------------------------
+            else if (elapsed < 5000) {
+                statusLabel.innerText = "BINARY_RECONSTRUCTION";
+                statusLabel.className = "absolute bottom-4 right-4 z-20 text-[10px] font-mono text-emerald-500 bg-slate-950 px-2 py-1 border border-emerald-900 rounded";
+                
+                ctx.globalAlpha = 1.0;
+                binaryData.forEach(p => {
+                    if(Math.random() > 0.98) p.value = Math.random() > 0.5 ? "1" : "0"; // Subtle motion
+                    ctx.fillStyle = p.color;
+                    ctx.fillText(p.value, p.x, p.y);
+                });
+            }
+
+            // ------------------------------------------------
+            // PHASE 3: RESOLVE (5s - 7s)
+            // Binary fades out, Real Photo fades in
+            // ------------------------------------------------
+            else if (elapsed < 7000) {
+                statusLabel.innerText = "RENDERING_IMAGE...";
+                statusLabel.className = "absolute bottom-4 right-4 z-20 text-[10px] font-mono text-cyan-500 bg-slate-950 px-2 py-1 border border-cyan-900 rounded";
+                
+                const progress = (elapsed - 5000) / 2000;
+
+                // Draw Fading Binary
+                ctx.globalAlpha = 1 - progress;
+                binaryData.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.fillText(p.value, p.x, p.y);
+                });
+
+                // Draw Fading Photo (On Top)
+                ctx.globalAlpha = progress;
+                const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const cx = (canvas.width - img.width * ratio) / 2;
+                const cy = (canvas.height - img.height * ratio) / 2; 
+                ctx.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+            }
+
+            // ------------------------------------------------
+            // PHASE 4: CLEAR PHOTO (7s - 10s)
+            // Just the photo, no numbers
+            // ------------------------------------------------
+            else {
+                statusLabel.innerText = "PONNABOINA_CHARAN_SAI";
+                statusLabel.className = "absolute bottom-4 right-4 z-20 text-[10px] font-mono text-white bg-emerald-900/50 px-2 py-1 border border-emerald-500 rounded shadow-[0_0_10px_rgba(16,185,129,0.5)]";
+                
+                ctx.globalAlpha = 1.0;
+                const ratio = Math.max(canvas.width / img.width, canvas.height / img.height);
+                const cx = (canvas.width - img.width * ratio) / 2;
+                const cy = (canvas.height - img.height * ratio) / 2; 
+                ctx.drawImage(img, 0, 0, img.width, img.height, cx, cy, img.width * ratio, img.height * ratio);
+            }
+
+            // Restore alpha for next frame safety
+            ctx.globalAlpha = 1.0;
+            requestAnimationFrame(animate);
+        }
+
+        // Contact Form Logic
+        document.getElementById('contact-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('form-name').value;
+            const email = document.getElementById('form-email').value;
+            const message = document.getElementById('form-message').value;
+            const subject = encodeURIComponent(`Portfolio Inquiry from ${name}`);
+            const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\nMessage:\n${message}`);
+            window.location.href = `mailto:ponnaboinacharansai@gmail.com?subject=${subject}&body=${body}`;
+            const btn = e.target.querySelector('button');
+            btn.innerHTML = 'Sent! Opening Email...';
+            btn.classList.remove('bg-cyan-600');
+            btn.classList.add('bg-emerald-600');
+            setTimeout(() => {
+                btn.innerHTML = 'Send Message';
+                btn.classList.add('bg-cyan-600');
+                btn.classList.remove('bg-emerald-600');
+                e.target.reset();
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
